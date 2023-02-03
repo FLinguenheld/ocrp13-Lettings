@@ -62,7 +62,7 @@ OS shell exécute l'interpréteur Python ci-dessus (à moins qu'un environnement
 
 - `cd /path/to/ocrp13-Lettings`
 - `source venv/bin/activate`
-- `pytest`
+- `pytest -vs`
 
 #### Base de données
 
