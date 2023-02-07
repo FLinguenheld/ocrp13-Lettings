@@ -1,0 +1,20 @@
+version: 2.1
+
+jobs:
+  build-and-test :
+    docker:
+      - image: cimg/python:3.11.1
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+          pip-dependency-file: requirements.txt
+      - run:
+          name: Run tests
+          command: pytest
+
+workflows:
+  sample: # This is the name of the workflow, feel free to change it to better match your workflow.
+    # Inside the workflow, you define the jobs you want to run.
+    jobs:
+      - build-and-test
