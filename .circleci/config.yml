@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  python: circleci/python@1.0.0
+
 jobs:
   build-and-test :
     docker:
@@ -8,10 +11,13 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-          pip-dependency-file: requirements.txt
+          # pip-dependency-file: requirements.txt
       - run:
-          name: Run tests
+          name: Tests
           command: pytest
+      - run:
+          name: Linter
+          command: flake8
 
 workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
