@@ -36,11 +36,11 @@ OS shell exécute l'interpréteur Python ci-dessus (à moins qu'un environnement
 - `cd /path/to/ocrp13-Lettings`
 - `python -m venv venv`
 - `apt-get install python3-venv` (Si l'étape précédente comporte des erreurs avec un paquet non trouvé sur Ubuntu)
-- Activer l'environnement `source venv/bin/activate`
-- Confirmer que la commande `python` exécute l'interpréteur Python dans l'environnement virtuel
+- Activez l'environnement `source venv/bin/activate`
+- Confirmez que la commande `python` exécute l'interpréteur Python dans l'environnement virtuel
 `which python`
-- Confirmer que la version de l'interpréteur Python est la version 3.6 ou supérieure `python --version`
-- Confirmer que la commande `pip` exécute l'exécutable pip dans l'environnement virtuel, `which pip`
+- Confirmez que la version de l'interpréteur Python est la version 3.6 ou supérieure `python --version`
+- Confirmez que la commande `pip` exécute l'exécutable pip dans l'environnement virtuel, `which pip`
 - Pour désactiver l'environnement, `deactivate`
 
 #### Exécuter le site
@@ -49,8 +49,8 @@ OS shell exécute l'interpréteur Python ci-dessus (à moins qu'un environnement
 - `source venv/bin/activate`
 - `pip install --requirement requirements.txt`
 - `python manage.py runserver`
-- Aller sur `http://localhost:8000/` dans un navigateur.
-- Confirmer que le site fonctionne et qu'il est possible de naviguer (vous devriez voir plusieurs profils et locations).
+- Allez sur `http://localhost:8000/` dans un navigateur.
+- Confirmez que le site fonctionne et qu'il est possible de naviguer (vous devriez voir plusieurs profils et locations).
 
 #### Linting
 
@@ -77,7 +77,7 @@ oc_lettings_site_profile where favorite_city like 'B%';`
 
 #### Panel d'administration
 
-- Aller sur `http://localhost:8000/admin`
+- Allez sur `http://localhost:8000/admin`
 - Connectez-vous avec l'utilisateur `admin`, mot de passe `Abc1234!`
 
 ### Windows
@@ -85,4 +85,19 @@ oc_lettings_site_profile where favorite_city like 'B%';`
 Utilisation de PowerShell, comme ci-dessus sauf :
 
 - Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1`
-- Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+- Remplacez `which <my-command>` par `(Get-Command <my-command>).Path`
+
+#### Déploiement
+
+##### CircleCI :
+
+Créez le contexte : `oc-lettings-context` puis ajoutez les variables suivantes :  
+`DOCKERHUB_REPO`  
+`DOCKERHUB_USERNAME`  
+`DOCKERHUB_PASS`  
+
+Lancement du site en local :  
+Récupérez le nom de l'image générée par le dernier commit puis entrez la commande :  
+`docker run -it -p 8000:8000 <nom de l'image>`
+
+Le serveur sera accessible avec votre navigateur à l'adresse `http://localhost:8000/`
