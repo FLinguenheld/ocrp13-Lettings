@@ -4,7 +4,7 @@ orbs:
   python: circleci/python@1.0.0
 
 jobs:
-  build-and-test :
+  build-and-test:
     docker:
       - image: cimg/python:3.11.1
     steps:
@@ -19,8 +19,32 @@ jobs:
           name: Linter
           command: flake8
 
+  publish-dockerhub:
+    docker:
+      - image: cimg/python:3.11.1
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Publish to Docker Hub
+          command: |
+            IMAGE_NAME=$DOCKERHUB_USERNAME/$DOCKERHUB_REPO:$CIRCLE_SHA1
+
+            docker build -t $IMAGE_NAME .
+            echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            docker push $IMAGE_NAME
+
 workflows:
-  sample: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
+  lettings-workflow:
     jobs:
-      - build-and-test
+      - build-and-test:
+          filters:
+            branches:
+              only: docker
+
+      - publish-dockerhub:
+          context:
+            - oc-lettings-context
+          requires:
+            - build-and-test
+
