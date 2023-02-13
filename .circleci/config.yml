@@ -21,20 +21,33 @@ jobs:
           name: Linter
           command: flake8
 
-  publish-dockerhub:
-    docker:
-      - image: cimg/python:3.11.1
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Publish to Docker Hub
-          command: |
-            IMAGE_NAME=$DOCKERHUB_USERNAME/$DOCKERHUB_REPO:$CIRCLE_BRANCH-$CIRCLE_SHA1
+  # publish-dockerhub:
+  #   docker:
+  #     - image: cimg/python:3.11.1
+  #   steps:
+  #     - checkout
+  #     - setup_remote_docker
+  #     - run:
+  #         name: Publish to Docker Hub
+  #         command: |
+  #           IMAGE_NAME=$DOCKERHUB_USERNAME/$DOCKERHUB_REPO:$CIRCLE_BRANCH-$CIRCLE_SHA1
 
-            docker build -t $IMAGE_NAME .
-            echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USERNAME --password-stdin
-            docker push $IMAGE_NAME
+            # docker build -t $IMAGE_NAME .
+            # echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            # docker push $IMAGE_NAME
+
+  pub-dock:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: $DOCKERHUB_USERNAME/$DOCKERHUB_REPO
+          tag: $CIRCLE_SHA1
+      - docker/push:
+          image: $DOCKERHUB_USERNAME/$DOCKERHUB_REPO
+          tag: $CIRCLE_SHA1
 
 
   heroku-deployment:
@@ -58,27 +71,16 @@ workflows:
               only: main
 
       # - publish-dockerhub:
-      #     context:
-      #       - oc-lettings-context
-      #     requires:
-      #       - build-and-test
-
-  build-and-publish-docker-image:
-    jobs:
-      - docker/publish:
+      - pub-dock:
           context:
             - oc-lettings-context
           requires:
-            - publish-dockerhub
-
-          image: $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:$CIRCLE_BRANCH
-          remote-docker-dlc: true
-          tag: $CIRCLE_SHA1
-          use-remote-docker: true
+            - build-and-test
 
 
       - heroku-deployment:
           context:
             - oc-lettings-context
           requires:
-            - publish-dockerhub
+            - pub-dock
+            # - publish-dockerhub
