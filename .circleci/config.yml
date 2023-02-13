@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   python: circleci/python@1.0.0
+  heroku: circleci/heroku@2.0.0
 
 jobs:
   build-and-test:
@@ -34,17 +35,35 @@ jobs:
             echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USERNAME --password-stdin
             docker push $IMAGE_NAME
 
+  heroku-deployment:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/install
+      - run:
+          name: Deploying the docker image
+          command: >
+            echo "The command above installs Heroku, the command below deploys.
+            What you do inbetween is up to you!"
+      - heroku/deploy-via-git
+
 workflows:
   lettings-workflow:
     jobs:
       - build-and-test:
           filters:
             branches:
-              only: docker
+              only: heroku
 
       - publish-dockerhub:
           context:
             - oc-lettings-context
           requires:
             - build-and-test
+
+      - heroku-deployment:
+          context:
+            - oc-lettings-context
+          requires:
+            - publish-dockerhub
 
