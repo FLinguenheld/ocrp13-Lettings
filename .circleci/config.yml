@@ -21,22 +21,7 @@ jobs:
           name: Linter
           command: flake8
 
-  # publish-dockerhub:
-  #   docker:
-  #     - image: cimg/python:3.11.1
-  #   steps:
-  #     - checkout
-  #     - setup_remote_docker
-  #     - run:
-  #         name: Publish to Docker Hub
-  #         command: |
-  #           IMAGE_NAME=$DOCKERHUB_USERNAME/$DOCKERHUB_REPO:$CIRCLE_BRANCH-$CIRCLE_SHA1
-
-            # docker build -t $IMAGE_NAME .
-            # echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USERNAME --password-stdin
-            # docker push $IMAGE_NAME
-
-  pub-dock:
+  publish-dockerhub:
     executor: docker/docker
     steps:
       - setup_remote_docker
@@ -49,38 +34,29 @@ jobs:
           image: $DOCKERHUB_USERNAME/$DOCKERHUB_REPO
           tag: $CIRCLE_SHA1
 
-
   heroku-deployment:
     executor: heroku/default
     steps:
       - checkout
       - heroku/install
-      # - run:
-      #     name: Deploying the docker image
-      #     command: >
-      #       echo "The command above installs Heroku, the command below deploys.
-      #       What you do inbetween is up to you!"
       - heroku/deploy-via-git
 
 workflows:
   lettings-workflow:
     jobs:
-      - build-and-test:
-          filters:
-            branches:
-              only: main
+      - build-and-test
 
-      # - publish-dockerhub:
-      - pub-dock:
+      - publish-dockerhub:
           context:
             - oc-lettings-context
           requires:
             - build-and-test
-
+          filters:
+            branches:
+              only: main
 
       - heroku-deployment:
           context:
             - oc-lettings-context
           requires:
-            - pub-dock
-            # - publish-dockerhub
+            - publish-dockerhub
