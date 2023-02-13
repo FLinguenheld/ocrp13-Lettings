@@ -17,7 +17,6 @@ ALLOWED_HOSTS = [
     'oc-lettings-7.herokuapp.com',
     ]
 
-
 # Application definition
 
 INSTALLED_APPS = [

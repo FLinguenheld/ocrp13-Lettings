@@ -53,7 +53,7 @@ workflows:
       - build-and-test:
           filters:
             branches:
-              only: heroku
+              only: master
 
       - publish-dockerhub:
           context:
