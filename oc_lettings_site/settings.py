@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from termcolor import cprint
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -8,35 +9,28 @@ from pathlib import Path
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-IS_HEROKU = "DYNO" in os.environ
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s'
 
-if 'SECRET_KEY' in os.environ:
+if "DYNO" in os.environ:
     SECRET_KEY = os.environ["SECRET_KEY"]
 
-
-# Generally avoid wildcards(*). However since Heroku router provides hostname validation it is ok
-if IS_HEROKU:
     ALLOWED_HOSTS = [
         '0.0.0.0',
         'oc-lettings-7.herokuapp.com',
     ]
-else:
-    ALLOWED_HOSTS = ['localhost']
 
-# SECURITY WARNING: don't run with debug turned on in production!
-if not IS_HEROKU:
+else:
+    SECRET_KEY = 'fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s'
     DEBUG = True
+    ALLOWED_HOSTS = ['localhost']
+    cprint('=== Local deployment, secret key not hidden and debug mode activated ====',
+           'yellow',
+           attrs=['bold'])
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'oc_lettings_site.apps.OCLettingsSiteConfig',
     'django.contrib.admin',

@@ -19,6 +19,7 @@ pytest-django==3.9.0
 pytz==2022.7.1
 six==1.16.0
 sqlparse==0.4.3
+termcolor==2.2.0
 tomli==2.0.1
 types-pytz==2022.7.1.0
 types-PyYAML==6.0.12.3
