@@ -4,27 +4,21 @@ from termcolor import cprint
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
-# SECURITY WARNING: keep the secret key used in production secret!
 
+# https://devcenter.heroku.com/articles/python-gunicorn
 if "DYNO" in os.environ:
     SECRET_KEY = os.environ["SECRET_KEY"]
-
-    ALLOWED_HOSTS = [
-        '0.0.0.0',
-        'oc-lettings-7.herokuapp.com',
-    ]
+    ALLOWED_HOSTS = ['oc-lettings-7.herokuapp.com']
 
 else:
     SECRET_KEY = 'fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s'
     DEBUG = True
-    ALLOWED_HOSTS = ['localhost']
+    ALLOWED_HOSTS = [
+        '0.0.0.0',
+        'localhost'
+        ]
     cprint('=== Local deployment, secret key not hidden and debug mode activated ====',
            'yellow',
            attrs=['bold'])
@@ -121,11 +115,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-
-# STATIC_URL = '/static/'
-
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = "static/"
 
-# Enable WhiteNoise's GZip compression of static assets.
+# Enable WhiteNoise's GZip compression of static assets. (See heroku docs)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

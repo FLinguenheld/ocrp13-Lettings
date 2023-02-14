@@ -89,15 +89,29 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 #### Déploiement
 
+
+
 ##### CircleCI :
 
 Créez le contexte : `oc-lettings-context` puis ajoutez les variables suivantes :  
-`DOCKERHUB_REPO`  
-`DOCKERHUB_USERNAME`  
-`DOCKERHUB_PASS`  
+`DOCKER_LOGIN`  
+`DOCKER_PASSWORD`  
+
+`HEROKU_API_KEY`  
+`HEROKU_APP_NAME`  
 
 Lancement du site en local :  
+Vous pouvez lancer le serveur localement avec django directement ou avec :  
+
+###### docker
 Récupérez le nom de l'image générée par le dernier commit puis entrez la commande :  
 `docker run -it -p 8000:8000 <nom de l'image>`
 
 Le serveur sera accessible avec votre navigateur à l'adresse `http://localhost:8000/`
+
+###### heroku
+
+Rendez-vous dans le dossier de l'application puis executez la commande :  
+`heroku local`
+
+Le serveur sera accessible à l'adresse `http://0.0.0.0:5000/`
