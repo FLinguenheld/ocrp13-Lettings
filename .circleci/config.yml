@@ -28,11 +28,11 @@ jobs:
       - checkout
       - docker/check
       - docker/build:
-          image: $DOCKERHUB_USERNAME/$DOCKERHUB_REPO
-          tag: $CIRCLE_SHA1
+          image: $DOCKER_LOGIN/$DOCKER_REPO
+          tag: $CIRCLE_BRANCH-$CIRCLE_SHA1
       - docker/push:
-          image: $DOCKERHUB_USERNAME/$DOCKERHUB_REPO
-          tag: $CIRCLE_SHA1
+          image: $DOCKER_LOGIN/$DOCKER_REPO
+          tag: $CIRCLE_BRANCH-$CIRCLE_SHA1
 
   heroku-deployment:
     executor: heroku/default
