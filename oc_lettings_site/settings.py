@@ -136,7 +136,8 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Sentry config
 sentry_sdk.init(
-    dsn="https://d8d8da558f88@o0.ingest.sentry.io/0",
+    dsn="https://14dade943dbf4acb9b2ddab0d61d2d02@o4504685848100864\
+            .ingest.sentry.io/4504686113521664",
     integrations=[DjangoIntegration()],
 
     # Set traces_sample_rate to 1.0 to capture 100%
