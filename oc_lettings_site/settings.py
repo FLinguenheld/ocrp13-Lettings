@@ -17,17 +17,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 
 if "DYNO" in os.environ:
-    SECRET_KEY = os.environ["SECRET_KEY"]
+    SECRET_KEY = os.environ['SECRET_KEY']
 
     ALLOWED_HOSTS = [
-        '0.0.0.0',
         'oc-lettings-7.herokuapp.com',
-    ]
+        ]
 
 else:
     SECRET_KEY = 'fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s'
     DEBUG = True
-    ALLOWED_HOSTS = ['localhost']
+    ALLOWED_HOSTS = [
+        'localhost',
+        '0.0.0.0'
+        ]
     cprint('=== Local deployment, secret key not hidden and debug mode activated ====',
            'yellow',
            attrs=['bold'])
@@ -136,8 +138,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Sentry config
 sentry_sdk.init(
-    dsn="https://14dade943dbf4acb9b2ddab0d61d2d02@o4504685848100864\
-            .ingest.sentry.io/4504686113521664",
+    dsn="https://14dade943dbf4acb9b2ddab0d61d2d02@o4504685848100864.ingest.sentry.io/4504686113521664",
     integrations=[DjangoIntegration()],
 
     # Set traces_sample_rate to 1.0 to capture 100%
