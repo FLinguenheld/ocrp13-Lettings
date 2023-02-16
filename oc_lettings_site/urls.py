@@ -5,7 +5,7 @@ from . import views
 
 
 def test_sentry(request):
-    raise ValueError(f"Error generated to test Sentry {request.user}")
+    raise NameError(f"Error generated to test Sentry {request.user}")
 
 
 urlpatterns = [
