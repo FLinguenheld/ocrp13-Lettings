@@ -4,9 +4,8 @@ from django.urls import path, include
 from . import views
 
 
-def trigger_error(request):
-    raise ValueError(f"Error generated to test Sentry {request}")
-    # division_by_zero = 1 / 0
+def test_sentry():
+    raise ValueError(f"Error generated to test Sentry")
 
 
 urlpatterns = [
@@ -15,5 +14,5 @@ urlpatterns = [
     path('', include('profiles.urls')),
     path('admin/', admin.site.urls),
 
-    path('sentry-debug/', trigger_error),
+    path('sentry-debug/', test_sentry),
 ]
