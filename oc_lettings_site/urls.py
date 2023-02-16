@@ -4,8 +4,8 @@ from django.urls import path, include
 from . import views
 
 
-def test_sentry():
-    raise ValueError(f"Error generated to test Sentry")
+def test_sentry(request):
+    raise ValueError(f"Error generated to test Sentry {request.user}")
 
 
 urlpatterns = [
