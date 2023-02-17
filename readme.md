@@ -8,115 +8,135 @@ Scale a Django Application Using Modular Architecture.
 ![Logo orange_county_lettings](./logos/orangecountylettings.png "Logo")
 
 ****
-## Résumé
+### Description
+The project purpose is to discover the DevOps practices with CircleCI, DockerHub, Heroku and 
+Sentry.  
+This repository contains a basic django application which is automatically built, tested, saved and deployed on 
+each push on main.
 
-Site web d'Orange County Lettings
-
-## Développement local
-
-### Prérequis
-
-- Compte GitHub avec accès en lecture à ce repository
+### Prerequisite
+- GitHub account with read access to this repository
 - Git CLI
-- SQLite3 CLI
-- Interpréteur Python, version 3.6 ou supérieure
-
-Dans le reste de la documentation sur le développement local, il est supposé que la commande `python` de votre 
-OS shell exécute l'interpréteur Python ci-dessus (à moins qu'un environnement virtuel ne soit activé).
+- SQLite CL
+- Python 3.6 or higher
 
 ### macOS / Linux
-
-#### Cloner le repository
+#### Clone repository
 
 - `cd /path/to/put/project/in`
 - `git clone https://github.com/OpenClassrooms-Student-Center/Python-OC-Lettings-FR.git`
 
-#### Créer l'environnement virtuel
-
+#### Create virtual environment
 - `cd /path/to/ocrp13-Lettings`
 - `python -m venv venv`
-- `apt-get install python3-venv` (Si l'étape précédente comporte des erreurs avec un paquet non trouvé sur Ubuntu)
-- Activez l'environnement `source venv/bin/activate`
-- Confirmez que la commande `python` exécute l'interpréteur Python dans l'environnement virtuel
-`which python`
-- Confirmez que la version de l'interpréteur Python est la version 3.6 ou supérieure `python --version`
-- Confirmez que la commande `pip` exécute l'exécutable pip dans l'environnement virtuel, `which pip`
-- Pour désactiver l'environnement, `deactivate`
+- `apt-get install python3-venv` (If the previous step has errors).
+- Activate the environment `source venv/bin/activate`.
+- Confirm that `python` command executes Python in the virtual environment as well `which python`.
+- Confirm the python version is 3.6 or higher `python --version`.
+- Confirm that `pip` command executes pip in the virtual environment as well `which pip`.
+- To deactivate the virtual environment `deactivate`.
 
-#### Exécuter le site
-
+#### Run site
 - `cd /path/to/ocrp13-Lettings`
 - `source venv/bin/activate`
 - `pip install --requirement requirements.txt`
 - `python manage.py runserver`
-- Allez sur `http://localhost:8000/` dans un navigateur.
-- Confirmez que le site fonctionne et qu'il est possible de naviguer (vous devriez voir plusieurs profils et locations).
+- Use your browser with this url `http://localhost:8000/`.
+- Confirm that the site is running (the database already contains entries).
 
 #### Linting
-
 - `cd /path/to/ocrp13-Lettings`
 - `source venv/bin/activate`
 - `flake8`
 
-#### Tests unitaires
-
+#### Unit tests
 - `cd /path/to/ocrp13-Lettings`
 - `source venv/bin/activate`
 - `pytest -vs`
 
-#### Base de données
-
+#### Database
 - `cd /path/to/ocrp13-Lettings`
-- Ouvrir une session shell `sqlite3`
-- Se connecter à la base de données `.open oc-lettings-site.sqlite3`
-- Afficher les tables dans la base de données `.tables`
-- Afficher les colonnes dans le tableau des profils, `pragma table_info(oc_lettings_site_profile);`
-- Lancer une requête sur la table des profils, `select user_id, favorite_city from 
+- Open a shell session `sqlite3`
+- Connect to database : `.open oc-lettings-site.sqlite3`
+- Display tables `.tables`
+- Display columns in the profile table `pragma table_info(oc_lettings_site_profile);`
+- Launch a request on the profile table, `select user_id, favorite_city from 
 oc_lettings_site_profile where favorite_city like 'B%';`
-- `.quit` pour quitter
+- `.quit` to exit.
 
-#### Panel d'administration
-
-- Allez sur `http://localhost:8000/admin`
-- Connectez-vous avec l'utilisateur `admin`, mot de passe `Abc1234!`
+#### Administation panel
+- Navigate to `http://localhost:8000/admin`
+- Connect with the user : `admin`, `Abc1234!`
 
 ### Windows
+Use PowerShell as above except :
+- Activate the virtual environment, `.\venv\Scripts\Activate.ps1`
+- Replace `which <my-command>` by `(Get-Command <my-command>).Path`
 
-Utilisation de PowerShell, comme ci-dessus sauf :
+## Deployment
+The Deployment needs these platforms which you have to subscribe :
 
-- Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1`
-- Remplacez `which <my-command>` par `(Get-Command <my-command>).Path`
-
-#### Déploiement
-
-Le déploiement utilise ces différentes plateformes, vous avez besoin d'un compte pour chacune d'elles :  
-
-[CircleCI]() : Permet de gérer l'intégration continue et le déploiement.  
+[CircleCI](https://circleci.com/) : Allows to manage continuous integration and deployment.  
 [DockerHub](https://hub.docker.com) :
-- Docker permet de créer des containers pour executer notre application dans un environnement isolé.
-- DockerHub est un cloud permettant de sauvegarder ces containers.
+Docker allows to create containers/images to execute our application in an isolated environment.  
+DockerHub is a cloud to save these images.  
+[Heroku](https://www.heroku.com) : Allow run the application (Install Heroku CLI).  
+[Sentry](https://sentry.io/welcome/) : Allow to catch bugs in production.  
 
-[Heroku](https://www.heroku.com) : Hebergeur de l'application. (installez heroku CLI)  
-[Sentry](https://sentry.io/welcome/) : Permet de capturer les bugs en production.  
 
-##### Configuration :
-1 - Heroku :
-Créez une nouvelle application et copiez son nom  
-Heroku vous donnera les informations vous permettant de lier votre dossier contenant le projet avec votre dépôt heroku.
+#### Configuration :
+**1 - Sentry :**  
+Create a new project (type django) and yank the given *DSN* key.
 
-2 - CircleCI :
-- Dans l'onglet *projects*, cliquez sur le bouton *Set Up Project* du dépôt lettings. Puis selectionnez la methode *Fastest*.
-  Cette methode va utiliser le fichier de configuration se trouvant dans le dossier *.circleci/config.yml*
-- A partir du menu principal, rendez-vous dans *Organization Settings/Contexts* pour créer un contexte.
-Ce dernier permet d'enregitrer des variables utilisées par le fichier config.yml.  
-Créez le contexte : `oc-lettings-context` puis ajoutez les variables suivantes :  
+**2 - Heroku :**  
+Create a new application and yank its name. Heroku is giving help to link your local folder 
+with the heroku repository.
+Once folders have been linked, enter these two variables in the heroku environment with these commands :  
+`heroku config:set SECRET_KEY=<votre clef django>`  
+`heroku config:set SENTRY_DSN=<votre clef dsn donnée par sentry>`  
+
+You can see the current variables with `heroku config`.
+
+**3 - DockerHub :**  
+Create a repository with the same Heroku application name.  
+
+**4 - CircleCI :**  
+In the tab *projects*, search your GitHub repository and clic on the button *Set Up Project*. Then select the 
+*Fastest* method. Due to this method, CircleCI is using the configuration file *.circleci/config.yml*.  
+
+From the main menu, navigate into *Organization Settings/Contexts* to create a context.  
+The latter allows to save variables used in the configuration file.  
+Create a context name : `oc-lettings-context` and add it these variables :  
+
 `DOCKER_LOGIN` : Votre login DockerHub  
-`DOCKER_PASSWORD`  
-`HEROKU_APP_NAME`  : Le nom de votre application (le même que DockerHub)
-`HEROKU_API_KEY`  : Votre clef API donnée par Heroku
+`DOCKER_PASSWORD` : Password DockerHub  
+`HEROKU_APP_NAME`  : Le nom de votre application (le même que DockerHub)  
+`HEROKU_API_KEY`  : Votre clef API donnée par Heroku  
 
-Lancement du site en local :  
-Récupérez le nom de l'image générée par le dernier commit puis entrez la commande :  
+#### Production application launching
+Each push on the main branch sets off :  
+
+1. **build-and-test** : Create a Docker image to launch the application. Then validate test with Pytest and lint 
+with Flake8.
+2. **publish-dockerhub** : If the build-and-test has been validated, save the image on DockerHub.
+3. **heroku-deployment** : If the publish-dockerhub has been validated, update the application on Heroku.
+
+You can see these steps on the CircleCI dashboard.  
+You can open the application with the command `heroku open`.  
+
+#### Local application launching
+
+##### Django
+See the section [Run site](#run-site)
+
+##### DockerHub
+Get an image name generated by a commit on your DockerHub and use the command :  
 `docker run -it -p 8000:8000 <nom de l'image>`
 
-Le serveur sera accessible avec votre navigateur à l'adresse `http://localhost:8000/`
+The server is running on the url `http://localhost:8000/`.
+
+##### Heroku
+Open a terminal, navigate into the application folder. Activate the virtual environment and 
+enter the command `heroku local`.
+
+The server is running on the url `http://0.0.0.0:5000/`.
