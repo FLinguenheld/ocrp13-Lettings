@@ -89,12 +89,31 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 #### Déploiement
 
-##### CircleCI :
+Le déploiement utilise ces différentes plateformes, vous avez besoin d'un compte pour chacune d'elles :  
 
+[CircleCI]() : Permet de gérer l'intégration continue et le déploiement.  
+[DockerHub](https://hub.docker.com) :
+- Docker permet de créer des containers pour executer notre application dans un environnement isolé.
+- DockerHub est un cloud permettant de sauvegarder ces containers.
+
+[Heroku](https://www.heroku.com) : Hebergeur de l'application. (installez heroku CLI)  
+[Sentry](https://sentry.io/welcome/) : Permet de capturer les bugs en production.  
+
+##### Configuration :
+1 - Heroku :
+Créez une nouvelle application et copiez son nom  
+Heroku vous donnera les informations vous permettant de lier votre dossier contenant le projet avec votre dépôt heroku.
+
+2 - CircleCI :
+- Dans l'onglet *projects*, cliquez sur le bouton *Set Up Project* du dépôt lettings. Puis selectionnez la methode *Fastest*.
+  Cette methode va utiliser le fichier de configuration se trouvant dans le dossier *.circleci/config.yml*
+- A partir du menu principal, rendez-vous dans *Organization Settings/Contexts* pour créer un contexte.
+Ce dernier permet d'enregitrer des variables utilisées par le fichier config.yml.  
 Créez le contexte : `oc-lettings-context` puis ajoutez les variables suivantes :  
-`DOCKERHUB_REPO`  
-`DOCKERHUB_USERNAME`  
-`DOCKERHUB_PASS`  
+`DOCKER_LOGIN` : Votre login DockerHub  
+`DOCKER_PASSWORD`  
+`HEROKU_APP_NAME`  : Le nom de votre application (le même que DockerHub)
+`HEROKU_API_KEY`  : Votre clef API donnée par Heroku
 
 Lancement du site en local :  
 Récupérez le nom de l'image générée par le dernier commit puis entrez la commande :  
