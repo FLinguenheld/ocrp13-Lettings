@@ -23,7 +23,8 @@ else:
     DEBUG = True
     ALLOWED_HOSTS = [
         'localhost',
-        '0.0.0.0'
+        '127.0.0.1',
+        '0.0.0.0',
         ]
     cprint('=== Local deployment, secret key not hidden and debug mode activated ====',
            'yellow',

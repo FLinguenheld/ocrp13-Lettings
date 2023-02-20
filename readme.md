@@ -1,5 +1,5 @@
 ![badge](https://img.shields.io/static/v1?label=Project&nbsp;OC&message=13&color=blueviolet&style=for-the-badge)
-![badge](https://img.shields.io/static/v1?label=Status&message=in_progess&color=blue&style=for-the-badge)
+![badge](https://img.shields.io/static/v1?label=Status&message=done&color=green&style=for-the-badge)
 
 # ocrp13-Lettings
 
@@ -9,7 +9,7 @@ Scale a Django Application Using Modular Architecture.
 
 ****
 ### Description
-The project purpose is to discover the DevOps practices with CircleCI, DockerHub, Heroku and 
+The project's purpose is to discover the DevOps practices with CircleCI, DockerHub, Heroku and 
 Sentry.  
 This repository contains a basic django application which is automatically built, tested, saved and deployed on 
 each push on main.
@@ -22,7 +22,6 @@ each push on main.
 
 ### macOS / Linux
 #### Clone repository
-
 - `cd /path/to/put/project/in`
 - `git clone https://github.com/OpenClassrooms-Student-Center/Python-OC-Lettings-FR.git`
 
@@ -57,7 +56,7 @@ each push on main.
 #### Database
 - `cd /path/to/ocrp13-Lettings`
 - Open a shell session `sqlite3`
-- Connect to database : `.open oc-lettings-site.sqlite3`
+- Connect to the database : `.open oc-lettings-site.sqlite3`
 - Display tables `.tables`
 - Display columns in the profile table `pragma table_info(oc_lettings_site_profile);`
 - Launch a request on the profile table, `select user_id, favorite_city from 
@@ -74,24 +73,24 @@ Use PowerShell as above except :
 - Replace `which <my-command>` by `(Get-Command <my-command>).Path`
 
 ## Deployment
-The Deployment needs these platforms which you have to subscribe :
+The Deployment needs these platforms which you have to subscribe to :
 
-[CircleCI](https://circleci.com/) : Allows to manage continuous integration and deployment.  
+[CircleCI](https://circleci.com/) : Allows you to manage continuous integration and deployment.  
 [DockerHub](https://hub.docker.com) :
-Docker allows to create containers/images to execute our application in an isolated environment.  
+Docker allows you to create containers/images to execute our application in an isolated environment.  
 DockerHub is a cloud to save these images.  
-[Heroku](https://www.heroku.com) : Allow run the application (Install Heroku CLI).  
-[Sentry](https://sentry.io/welcome/) : Allow to catch bugs in production.  
+[Heroku](https://www.heroku.com) : Allows the running of the application (Install Heroku CLI).  
+[Sentry](https://sentry.io/welcome/) : Allows you to catch bugs in production.  
 
 
 #### Configuration :
 **1 - Sentry :**  
-Create a new project (type django) and yank the given *DSN* key.
+Create a new project (type django) and copy the given *DSN* key.
 
 **2 - Heroku :**  
-Create a new application and yank its name. Heroku is giving help to link your local folder 
+Create a new application and copy its name. Heroku will help to link your local folder 
 with the heroku repository.
-Once folders have been linked, enter these two variables in the heroku environment with these commands :  
+Once folders have been linked, enter these two variables in the Heroku environment with these commands :  
 `heroku config:set SECRET_KEY=<votre clef django>`  
 `heroku config:set SENTRY_DSN=<votre clef dsn donnée par sentry>`  
 
@@ -101,17 +100,17 @@ You can see the current variables with `heroku config`.
 Create a repository with the same Heroku application name.  
 
 **4 - CircleCI :**  
-In the tab *projects*, search your GitHub repository and clic on the button *Set Up Project*. Then select the 
-*Fastest* method. Due to this method, CircleCI is using the configuration file *.circleci/config.yml*.  
+In the tab *projects*, search your GitHub repository and click on the button *Set Up Project*. Then select the 
+*Fastest* method. Due to this method, CircleCI will use the configuration file *.circleci/config.yml*.  
 
 From the main menu, navigate into *Organization Settings/Contexts* to create a context.  
-The latter allows to save variables used in the configuration file.  
-Create a context name : `oc-lettings-context` and add it these variables :  
+The latter allows you to save variables used in the configuration file.  
+Create a context name : `oc-lettings-context` and add these variables to it :  
 
 `DOCKER_LOGIN` : Votre login DockerHub  
 `DOCKER_PASSWORD` : Password DockerHub  
-`HEROKU_APP_NAME`  : Le nom de votre application (le même que DockerHub)  
-`HEROKU_API_KEY`  : Votre clef API donnée par Heroku  
+`HEROKU_APP_NAME` : Your application name (the same used in DockerHub)  
+`HEROKU_API_KEY` : Your API key given by Heroku  
 
 #### Production application launching
 Each push on the main branch sets off :  
@@ -124,7 +123,7 @@ with Flake8.
 You can see these steps on the CircleCI dashboard.  
 You can open the application with the command `heroku open`.  
 
-#### Local application launching
+#### Local application launch
 
 ##### Django
 See the section [Run site](#run-site)
@@ -133,10 +132,10 @@ See the section [Run site](#run-site)
 Get an image name generated by a commit on your DockerHub and use the command :  
 `docker run -it -p 8000:8000 <nom de l'image>`
 
-The server is running on the url `http://localhost:8000/`.
+The server will run on the url `http://localhost:8000/`.
 
 ##### Heroku
 Open a terminal, navigate into the application folder. Activate the virtual environment and 
 enter the command `heroku local`.
 
-The server is running on the url `http://0.0.0.0:5000/`.
+The server will run on the url `http://0.0.0.0:5000/`.
