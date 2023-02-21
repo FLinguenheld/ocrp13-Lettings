@@ -14,7 +14,7 @@ if "DYNO" in os.environ:
     SECRET_KEY = os.environ['SECRET_KEY']
 
     ALLOWED_HOSTS = [
-        'oc-lettings-7.herokuapp.com',
+        '.herokuapp.com',
         ]
 
 # Development config
