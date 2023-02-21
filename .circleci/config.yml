@@ -28,10 +28,10 @@ jobs:
       - checkout
       - docker/check
       - docker/build:
-          image: $DOCKER_LOGIN/$HEROKU_APP_NAME
+          image: $DOCKER_LOGIN/$DOCKER_REPOSITORY
           tag: $CIRCLE_BRANCH-$CIRCLE_SHA1
       - docker/push:
-          image: $DOCKER_LOGIN/$HEROKU_APP_NAME
+          image: $DOCKER_LOGIN/$DOCKER_REPOSITORY
           tag: $CIRCLE_BRANCH-$CIRCLE_SHA1
 
   heroku-deployment:

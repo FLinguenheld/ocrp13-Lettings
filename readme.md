@@ -97,7 +97,7 @@ Once folders have been linked, enter these two variables in the Heroku environme
 You can see the current variables with `heroku config`.
 
 **3 - DockerHub :**  
-Create a repository with the same Heroku application name.  
+Create a repository and save its name.  
 
 **4 - CircleCI :**  
 In the tab *projects*, search your GitHub repository and click on the button *Set Up Project*. Then select the 
@@ -107,9 +107,10 @@ From the main menu, navigate into *Organization Settings/Contexts* to create a c
 The latter allows you to save variables used in the configuration file.  
 Create a context name : `oc-lettings-context` and add these variables to it :  
 
-`DOCKER_LOGIN` : Votre login DockerHub  
+`DOCKER_LOGIN` : Login DockerHub  
 `DOCKER_PASSWORD` : Password DockerHub  
-`HEROKU_APP_NAME` : Your application name (the same used in DockerHub)  
+`DOCKER_REPOSITORY` : Your DockerHub repository name  
+`HEROKU_APP_NAME` : Your Heroku application name  
 `HEROKU_API_KEY` : Your API key given by Heroku  
 
 #### Production application launching
